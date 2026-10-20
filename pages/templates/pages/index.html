@@ -10,10 +10,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet" data-page-node-id="ECynZwkAt1weMYLCz7odDC" />
 <style>
   :root {
-    --bg: #000000FF;
-    --bg-soft: #f6f7f9;
+    /*--bg: #000000FF;*/
+    --bg: #212020;
+    --bg-soft: #212020;
     --ink: #111318;
-    --ink-soft: #5a5f6a;
+    --ink-soft: #ffffff;
     --line: #e7e9ee;
     --brand: #1f5eff;
     --brand-dark: #1747c9;
@@ -38,24 +39,20 @@
   /* ===== 页眉 ===== */
   header.site {
     position: sticky; top: 0; z-index: 100;
-    background: rgba(255, 255, 255, 0.85);
+    background: var(--bg);
     backdrop-filter: saturate(180%) blur(14px);
     -webkit-backdrop-filter: saturate(180%) blur(14px);
-    border-bottom: 1px solid var(--line);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
   .nav {
     display: flex; align-items: center; justify-content: space-between;
     height: 68px;
   }
-  .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; letter-spacing: 0.5px; }
-  .logo .mark {
-    width: 30px; height: 30px; border-radius: 8px;
-    background: linear-gradient(135deg, var(--brand), #6a5cff);
-    display: grid; place-items: center; color: #fff; font-size: 15px; font-weight: 700;
-  }
-  .menu { display: flex; align-items: center; gap: 34px; font-size: 15px; color: var(--ink-soft); }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; letter-spacing: 0.5px; color: #fff; }
+  .logo img { height: 36px; width: auto; border-radius: 8px; }
+  .menu { display: flex; align-items: center; gap: 34px; font-size: 15px; color: rgba(255, 255, 255, 0.7); }
   .menu a { transition: color .2s; }
-  .menu a:hover { color: var(--ink); }
+  .menu a:hover { color: #fff; }
   .nav-cta { display: flex; align-items: center; gap: 14px; }
   .btn {
     display: inline-flex; align-items: center; justify-content: center;
@@ -64,9 +61,9 @@
   }
   .btn-primary { background: var(--brand); color: #fff; }
   .btn-primary:hover { background: var(--brand-dark); transform: translateY(-1px); }
-  .btn-ghost { color: var(--ink); }
-  .btn-ghost:hover { color: var(--brand); }
-  .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+  .btn-ghost { color: rgba(255, 255, 255, 0.8); }
+  .btn-ghost:hover { color: #fff; }
+  .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 8px; filter: invert(1); }
 
   /* ===== Hero ===== */
   .hero { position: relative; padding: 96px 0 88px; text-align: center; overflow: hidden; }
@@ -81,9 +78,9 @@
   }
   .hero::before {
     content: ""; position: absolute; inset: 0; z-index: -1;
-    background:
-      radial-gradient(600px 320px at 50% -10%, rgba(31, 94, 255, 0.12), transparent 70%),
-      radial-gradient(500px 300px at 85% 20%, rgba(106, 92, 255, 0.10), transparent 70%);
+    /*background:*/
+    /*  radial-gradient(600px 320px at 50% -10%, rgba(31, 94, 255, 0.12), transparent 70%),*/
+    /*  radial-gradient(500px 300px at 85% 20%, rgba(106, 92, 255, 0.10), transparent 70%);*/
   }
   .hero .eyebrow {
     display: inline-block; font-size: 13px; font-weight: 600; letter-spacing: 1.5px;
@@ -108,32 +105,47 @@
   .gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
   .gallery .card {
     border-radius: var(--radius); overflow: hidden; position: relative;
-    background: var(--bg-soft); box-shadow: var(--shadow); cursor: pointer;
+    background: var(--ink-soft); box-shadow: var(--shadow); cursor: pointer;
     transition: transform .35s ease;
   }
   .gallery .card:hover { transform: translateY(-6px); }
   .gallery .card img { width: 100%; height: 300px; object-fit: cover; }
   .gallery .card .cap { padding: 18px 20px; }
-  .gallery .card .cap b { font-size: 16px; display: block; margin-bottom: 4px; }
-  .gallery .card .cap span { font-size: 14px; color: var(--ink-soft); }
+  .gallery .card .cap b { font-size: 16px; display: block; margin-bottom: 4px; color: var(--bg)}
+  .gallery .card .cap span { font-size: 16px; color: var(--bg); }
 
   /* ===== 视频块 ===== */
   .video-band { background: var(--bg-soft); }
-  .video-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 22px; align-items: stretch; }
+  .video-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 22px; align-items: stretch; width: 100%;}
   .video-feature {
     border-radius: var(--radius); overflow: hidden; position: relative;
-    box-shadow: var(--shadow); background: #000; aspect-ratio: 16/9;
+    box-shadow: var(--shadow); background: #000;
   }
   .video-feature video { width: 100%; height: 100%; object-fit: cover; }
   .video-side { display: flex; flex-direction: column; gap: 22px; }
-  .video-side .item {
+  .video-side .side-card {
     flex: 1; border-radius: var(--radius); overflow: hidden; position: relative;
-    background: #000; min-height: 0;
+    background: var(--bg-soft); box-shadow: var(--shadow); padding: 28px 24px;
+    display: flex; flex-direction: column; justify-content: center;
+    transition: transform .3s ease;
   }
-  .video-side .item video { width: 100%; height: 100%; object-fit: cover; }
+  .video-side .side-card:hover { transform: translateY(-4px); }
+  .video-side .side-card .ico {
+    width: 44px; height: 44px; border-radius: 12px; margin-bottom: 16px;
+    display: grid; place-items: center; font-size: 20px;
+    background: rgba(31, 94, 255, 0.10); color: var(--brand);
+  }
+  .video-side .side-card h1 { font-size: 17px; color: var(--ink-soft); font-weight: 600; margin-bottom: 8px; }
+  .video-side .side-card p { font-size: 14px; color: var(--ink-soft); line-height: 1.5; }
+  .video-side .side-card button {
+    margin-top: 16px; padding: 10px 24px; border-radius: 8px;
+    background: var(--brand); color: #fff; border: none; font-size: 14px;
+    font-weight: 500; cursor: pointer; transition: all .2s;
+  }
+  .video-side .side-card button:hover { background: var(--brand-dark); transform: translateY(-2px); }
   .video-overlay {
     position: absolute; left: 16px; bottom: 16px; color: #fff; z-index: 2;
-    background: linear-gradient(transparent, rgba(0,0,0,0.65)); width: 100%;
+    width: 100%;
     padding: 40px 20px 16px; left: 0; bottom: 0;
   }
   .video-overlay b { display: block; font-size: 16px; }
@@ -165,29 +177,32 @@
   .cta .btn-white { background: #fff; color: var(--brand); font-weight: 600; }
 
   /* ===== 页脚 ===== */
-  footer.site { background: #0d0f14; color: #c7cbd4; padding: 64px 0 0; }
-  .foot-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; padding-bottom: 48px; }
-  .foot-brand .logo { color: #fff; margin-bottom: 16px; }
-  .foot-brand p { font-size: 14px; color: #8b90a0; max-width: 280px; }
-  footer h4 { color: #fff; font-size: 14px; margin-bottom: 18px; letter-spacing: 0.5px; }
-  footer ul { list-style: none; }
-  footer ul li { margin-bottom: 12px; }
-  footer ul a { font-size: 14px; color: #8b90a0; transition: color .2s; }
-  footer ul a:hover { color: #fff; }
+  footer.site { background: var(--bg); color: #ffffff; padding: 48px 0 0; }
+  .foot-grid { display: flex; justify-content: center; gap: 32px; padding-bottom: 32px; }
+  .foot-grid ul { list-style: none; display: flex; gap: 24px; }
+  .foot-grid ul li { margin: 0; }
+  .foot-grid ul a { font-size: 14px; color: #8b90a0; transition: color .2s; }
+  .foot-grid ul a:hover { color: #fff; }
   .foot-bottom {
-    border-top: 1px solid rgba(255,255,255,0.08); padding: 22px 0;
+    border-top: 1px solid rgba(255,255,255,0.08); padding: 20px 0;
     display: flex; justify-content: space-between; align-items: center;
     font-size: 13px; color: #6b7080; flex-wrap: wrap; gap: 12px;
   }
   .foot-social { display: flex; gap: 14px; }
   .foot-social a { color: #8b90a0; font-size: 14px; }
   .foot-social a:hover { color: #fff; }
+  .foot-icp {
+    text-align: center; padding: 16px 0 24px; font-size: 12px; color: #6b7080;
+  }
+  .foot-icp a { color: #6b7080; text-decoration: none; transition: color .2s; }
+  .foot-icp a:hover { color: #fff; }
+  .foot-icp .dot { margin: 0 8px; }
 
   /* ===== 响应式 ===== */
   @media (max-width: 960px) {
     .gallery, .services { grid-template-columns: repeat(2, 1fr); }
     .video-grid { grid-template-columns: 1fr; }
-    .foot-grid { grid-template-columns: 1fr 1fr; }
+    .foot-grid { flex-direction: column; align-items: center; gap: 16px; }
     .menu, .nav-cta .btn-ghost { display: none; }
     .hamburger { display: block; }
   }
@@ -204,10 +219,9 @@
 <!-- ===== 页眉 ===== -->
 <header class="site" data-page-node-id="xLowUoQ3OCUkYD9ZQRgHlN">
   <div class="wrap nav" data-page-node-id="FxsbAJSDZdPE22233LC8Rb">
-    <a href="#" class="logo" data-page-node-id="vozdjopeftyLU5eZ1Sj9kE"><span class="mark" data-page-node-id="4FQJexMrV4ot9y3ljKAzJ9">云</span>图论吞枣实验室</a>
+    <a href="#" class="logo" data-page-node-id="vozdjopeftyLU5eZ1Sj9kE"><img src="/static/pages/Artboard.png" alt="图论吞枣实验室" data-page-node-id="4FQJexMrV4ot9y3ljKAzJ9" />图论吞枣实验室 - The TLT Labs</a>
     <nav class="menu" data-page-node-id="lor7TndLSQlcKOkYvgRpcm">
-      <a href="#about" data-page-node-id="03KdIHMwHOJiOIbBB21gAq">关于我们</a>
-      <a href="#gallery" data-page-node-id="IXhXHxxVUM7yQKBTzK4irq">案例展示</a>
+      <a href="#about" data-page-node-id="03KdIHMwHOJiOIbBB21gAq">公司简介</a>
       <a href="#contact" data-page-node-id="11QDR5CYfGYubGhZl2MuxB">联系我们</a>
     </nav>
   </div>
@@ -218,145 +232,80 @@
   {% include "pages/iframe.html" %}
 </section>
 
-<!-- ===== 图片块 ===== -->
-<section id="gallery" data-page-node-id="kcrmPNVFiG1AcfeFbFdGgl">
-  <div class="wrap" data-page-node-id="d5pRnL0NqJ9xVrmjBhZTgy">
-    <div class="section-head" data-page-node-id="mjOtD1LScrtwEW92HBNeVx">
-      <span class="tag" data-page-node-id="Z3VOqIN360xgDgxC8I4q8C">Case Studies</span>
-      <h2 data-page-node-id="KdtSsSuKNeffGcawCCp7dt">用作品说话</h2>
-      <p data-page-node-id="QKOy0fwXs4gYVmnHIefSU9">精选合作案例，见证我们如何将创意转化为可衡量的商业价值。</p>
-    </div>
-    <div class="gallery" data-page-node-id="OYabWA7rpQrBIDYGhH4Mtg">
-      <div class="card" data-page-node-id="wAtrjomguERV8qRMzHrGBv">
-        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80" alt="智慧办公空间" data-page-node-id="rkB8YPOSXQ9qQuO5ZrCRqU" />
-        <div class="cap" data-page-node-id="SDpIie657CrOBclmwkxpHW"><b data-page-node-id="imiVA6SYrZo6Vk8VHxaIvC">智慧办公</b><span data-page-node-id="SVymilPCkCpBfmpAhLMBRs">数字化办公空间整体解决方案</span></div>
-      </div>
-      <div class="card" data-page-node-id="fyXu4tRKM4MKNkGx62zM4v">
-        <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?w=800&q=80" alt="团队协作" data-page-node-id="OoL1OC55c8EbBRXInvP90G" />
-        <div class="cap" data-page-node-id="3IFAWDx3PvEYimci6vT7x9"><b data-page-node-id="50BULKwJB4gN51fjKJs0XN">团队协作</b><span data-page-node-id="KrOkyvji50JrbSzxQKs8iq">高效协同的数字化团队工具</span></div>
-      </div>
-      <div class="card" data-page-node-id="kACYY41vMyVa7kQQSfr8li">
-        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80" alt="数据分析" data-page-node-id="gfj3ZNTxlPPSCI7ms51Je7" />
-        <div class="cap" data-page-node-id="ffVvBOJvZ6B0EZJ2JP4YLy"><b data-page-node-id="mpjiUj0kv0Nt27kDUCeNuw">数据分析</b><span data-page-node-id="28flWPfYf3uC2bbpkOSZYH">驱动决策的商业智能平台</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- ===== 视频块 ===== -->
 <section class="video-band" id="video" data-page-node-id="xO5dS1OZJihgxIt6qsjHr1">
   <div class="wrap" data-page-node-id="Gu4iQNY8GHxtVCFpIdhHhQ">
-    <div class="section-head" data-page-node-id="UlIWu8dC4TWzzKdRBpzuBT">
-      <span class="tag" data-page-node-id="4daMB5P8ql7nYLSdCAQzGB">Video Center</span>
-      <h2 data-page-node-id="JNjCb51EcJG6PcczgwHVRA">走进云启</h2>
-      <p data-page-node-id="SwOscvRMUabwkLaRfhe0ir">通过影像了解我们的产品、团队与客户故事。</p>
-    </div>
     <div class="video-grid" data-page-node-id="62vIbhzXWHUKtDi7PGFYWZ">
       <div class="video-feature" data-page-node-id="dg18rCw4585dxV1hTGMxni">
-        <video muted loop playsinline autoplay poster="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1200&q=80" data-page-node-id="awbuRYUi7UCT7gWtHwA5GD">
-          <source src="https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4" data-page-node-id="gFuVn7s6e2RVVKJwCGR40X" />
+        <video muted loop playsinline autoplay controls data-page-node-id="awbuRYUi7UCT7gWtHwA5GD">
+          <source src="/static/pages/demo.mov" type="video/mp4" data-page-node-id="gFuVn7s6e2RVVKJwCGR40X" />
         </video>
-        <div class="video-overlay" data-page-node-id="0t8aFvhtMepLLz4c9ASfd0"><b data-page-node-id="nvFQ5ZkLQuVX5fDVeJQVPy">云启科技 2026 品牌宣传片</b><span data-page-node-id="wTVI7RmIDLPTloD45JbwFZ">2:34</span></div>
+        <div class="video-overlay" data-page-node-id="0t8aFvhtMepLLz4c9ASfd0"></div>
       </div>
-      <div class="video-side" data-page-node-id="FD8MrK7j923REWdptmvSZD">
-        <div class="item" data-page-node-id="sUFGE4AsEdO5MuTqdyaPFc">
-          <video muted loop playsinline autoplay poster="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80" data-page-node-id="UuhvyDlbF0BXskNtF272bb">
-            <source src="https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4" type="video/mp4" data-page-node-id="e8f5Zbheqtnl1rKLGwXJzv" />
-          </video>
-          <div class="video-overlay" data-page-node-id="ScqNsatpuzQy5DPWD2wm1P"><b data-page-node-id="RYLaYLqi2nsRnxvYYHvFYC">客户成功故事</b><span data-page-node-id="BrIaIemwVEzS3QcWhrYrDG">1:12</span></div>
-        </div>
-        <div class="item" data-page-node-id="XVpYJjyBZCzNTARSQ2c1Tr">
-          <video muted loop playsinline autoplay poster="https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&q=80" data-page-node-id="R1YSfOYBrub6YXcPvEIZPZ">
-            <source src="https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4" type="video/mp4" data-page-node-id="LwEPdEaIj3gGKtniAZ2tCD" />
-          </video>
-          <div class="video-overlay" data-page-node-id="8k559DsFn7DImJZ9OU0pCo"><b data-page-node-id="XYnWHrzmCVuwV4CqasLiMH">产品能力演示</b><span data-page-node-id="xQaObHRaBvUgNlqfmjewSr">0:48</span></div>
+      <div class="video-side">
+        <div class="side-card">
+          <h1>Ordinary 智能笔记</h1>
+          <p>面向 STEM 领域的智能笔记工具，借助多模态大模型将零散图文转化为整洁、可编辑的结构化文档，提供智能排版与快速查询功能。</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ===== 服务块 ===== -->
-<section id="services" data-page-node-id="msErVxR6sg32PFWmvo9UMk">
-  <div class="wrap" data-page-node-id="XRvlPCUdKFHqilOLP4gwXo">
-    <div class="section-head" data-page-node-id="RObd3Asbs0BCA57jwuH7pc">
-      <span class="tag" data-page-node-id="18D7F3CZB5k7JAkeAveVh1">Solutions</span>
-      <h2 data-page-node-id="J8AkpaNOTyjv1ehnnqWLZI">一站式解决方案</h2>
-      <p data-page-node-id="8Ga0lPomLMr8ORtO2btx6i">覆盖企业数字化转型全流程，从咨询、设计到交付与运营。</p>
-    </div>
-    <div class="services" data-page-node-id="PCcR2xAKre9GoOTtoBnkg7">
-      <div class="service" data-page-node-id="QfOOuiq5fi9uBGVScqDAbL">
-        <div class="ico" data-page-node-id="BFfYVoa1xzAipDCk1vAh0d">🧭</div>
-        <h3 data-page-node-id="GlktfSTwlgSituxPk5pL04">战略咨询</h3>
-        <p data-page-node-id="S1BdiTBwFJY5Tt94PFOPCX">基于行业洞察与数据，为企业制定清晰的数字化路线图与落地策略。</p>
+<!-- ===== 图片块 ===== -->
+<section id="gallery" data-page-node-id="kcrmPNVFiG1AcfeFbFdGgl">
+  <div class="wrap" data-page-node-id="d5pRnL0NqJ9xVrmjBhZTgy">
+    <div class="gallery" data-page-node-id="OYabWA7rpQrBIDYGhH4Mtg">
+      <div class="card" data-page-node-id="wAtrjomguERV8qRMzHrGBv">
+        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80" alt="智慧办公空间" data-page-node-id="rkB8YPOSXQ9qQuO5ZrCRqU" />
+        <div class="cap" data-page-node-id="SDpIie657CrOBclmwkxpHW"><b data-page-node-id="imiVA6SYrZo6Vk8VHxaIvC">Product-Market Fit</b><span data-page-node-id="SVymilPCkCpBfmpAhLMBRs"></span></div>
       </div>
-      <div class="service" data-page-node-id="AVdVlM8Tq8CE1YKj4CYMsg">
-        <div class="ico" data-page-node-id="QMXI2cIfAIH3wk2W41Gz2M">⚙️</div>
-        <h3 data-page-node-id="3vE7Q7Y3On4bYqGfrFDsjK">技术研发</h3>
-        <p data-page-node-id="pqysz5HMldANcgqpE5HcIb">高可用、可扩展的软件系统建设，覆盖云原生架构与核心业务系统。</p>
+      <div class="card" data-page-node-id="fyXu4tRKM4MKNkGx62zM4v">
+        <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?w=800&q=80" alt="团队协作" data-page-node-id="OoL1OC55c8EbBRXInvP90G" />
+        <div class="cap" data-page-node-id="3IFAWDx3PvEYimci6vT7x9"><b data-page-node-id="50BULKwJB4gN51fjKJs0XN">Hackathon Teamup</b><span data-page-node-id="KrOkyvji50JrbSzxQKs8iq"></span></div>
       </div>
-      <div class="service" data-page-node-id="7dQQQjMFXQ7erx2jsLXw6o">
-        <div class="ico" data-page-node-id="juHJ2BKm1tZRJbEw6Msw1T">📈</div>
-        <h3 data-page-node-id="Osqh45hmAhsSJmT51jWNeD">增长运营</h3>
-        <p data-page-node-id="3NICbGZYyVADuOQuwA2f5z">数据驱动的精细化运营，持续优化获客、转化与客户生命周期价值。</p>
+      <div class="card" data-page-node-id="kACYY41vMyVa7kQQSfr8li">
+        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80" alt="数据分析" data-page-node-id="gfj3ZNTxlPPSCI7ms51Je7" />
+        <div class="cap" data-page-node-id="ffVvBOJvZ6B0EZJ2JP4YLy"><b data-page-node-id="mpjiUj0kv0Nt27kDUCeNuw">Industry Information</b><span data-page-node-id="28flWPfYf3uC2bbpkOSZYH"></span></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ===== CTA ===== -->
-<section class="cta" id="contact" data-page-node-id="5i1gn2BbKli1DyuYEoOiFg">
-  <div class="wrap" data-page-node-id="IDhPT2xUSRQgh6jFqzvm8d">
-    <div class="box" data-page-node-id="tAxP9FtDRIeVggBaDNK4Mf">
-      <h2 data-page-node-id="s8eTI5lWK7nJbNYNAspMx7">准备好开启数字化转型了吗？</h2>
-      <p data-page-node-id="YX2zTrgdDgUmCSIXz84mo9">留下您的需求，我们的顾问将在 24 小时内与您联系。</p>
-      <a href="mailto:hello@cloudstart.com" class="btn btn-white" data-page-node-id="MuQC0kzrJGE2myIvWFfGH1">立即联系我们</a>
-    </div>
-  </div>
-</section>
+<!--&lt;!&ndash; ===== CTA ===== &ndash;&gt;-->
+<!--<section class="cta" id="contact" data-page-node-id="5i1gn2BbKli1DyuYEoOiFg">-->
+<!--  <div class="wrap" data-page-node-id="IDhPT2xUSRQgh6jFqzvm8d">-->
+<!--    <div class="box" data-page-node-id="tAxP9FtDRIeVggBaDNK4Mf">-->
+<!--      <h2 data-page-node-id="s8eTI5lWK7nJbNYNAspMx7"></h2>-->
+<!--      <p data-page-node-id="YX2zTrgdDgUmCSIXz84mo9">留下您的需求，我们的顾问将在 24 小时内与您联系。</p>-->
+<!--      <a href="mailto:hello@cloudstart.com" class="btn btn-white" data-page-node-id="MuQC0kzrJGE2myIvWFfGH1">立即联系我们</a>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</section>-->
 
 <!-- ===== 页脚 ===== -->
 <footer class="site" data-page-node-id="FqbRwhboscNOFVowt9hgcy">
   <div class="wrap" data-page-node-id="5tWF8ibenh1AfSeINMBi4a">
     <div class="foot-grid" data-page-node-id="fB2InsEW86WorgqwtkCyw4">
-      <div class="foot-brand" data-page-node-id="SYNzN4e8OpOuHi3pTjSSEC">
-        <a href="#" class="logo" data-page-node-id="FiTHDdNGBXn6K8dQXyRZmk"><span class="mark" data-page-node-id="Uivte1PCuwH52ZZAZqXw95">云</span>云启科技</a>
-        <p data-page-node-id="A8wEcPf2OwLiJPewHcVyV9">致力于以数字化解决方案驱动企业增长，成为客户最值得信赖的技术伙伴。</p>
-      </div>
-      <div data-page-node-id="kNPGErACsxkbr1gZAe1OVj">
-        <h4 data-page-node-id="BWxCEBUOGRQI6QfnhppYav">产品服务</h4>
-        <ul data-page-node-id="hb9B59JYE11bvkAVZVOWRi">
-          <li data-page-node-id="quUdzjrQYxDU3syL5tF7JU"><a href="#" data-page-node-id="TEUx6qO50LazEW8PdTDrHR">战略咨询</a></li>
-          <li data-page-node-id="rPRtjH1J7OA7zdbfPuG5ay"><a href="#" data-page-node-id="SWeRw9SUGCxl0hVFJamw4T">技术研发</a></li>
-          <li data-page-node-id="x1LGjw9yRhu7prAjRoCw7p"><a href="#" data-page-node-id="AP5iYl4mUmMJkF2w6TVI1h">增长运营</a></li>
-          <li data-page-node-id="MIQHHiG18r67xobYIUDW7z"><a href="#" data-page-node-id="P9kSzQfVQsZFS0Of0FWMHh">数据服务</a></li>
-        </ul>
-      </div>
-      <div data-page-node-id="QXC47zEB2R7rzVR51lcU0U">
-        <h4 data-page-node-id="yAcTHFka5hd3y2HhfQFxGo">关于我们</h4>
-        <ul data-page-node-id="zb8JVmA9K4F1PxKmLjFGH5">
-          <li data-page-node-id="YRDvnI3ZLS04EqRl4UU8ce"><a href="#" data-page-node-id="wxlsqOEHKiOAU9HFxw2Xgl">公司简介</a></li>
-          <li data-page-node-id="eNGETUyQisdLbzTMGSMqyN"><a href="#" data-page-node-id="R2ynKDOkHKGeUwFcMHGWdn">加入我们</a></li>
-          <li data-page-node-id="TIPXfiEQNhKzDWSXv6xNS5"><a href="#" data-page-node-id="f0VuqabrFPQLvwdV4937iS">新闻动态</a></li>
-          <li data-page-node-id="zlpfkFnK7GUxNQF1Y8YJSo"><a href="#" data-page-node-id="uuAEPfPqTCwtczzGaUpbhp">联系方式</a></li>
-        </ul>
-      </div>
       <div data-page-node-id="WtK3qP0WvKqyw4NrEwpLrH">
-        <h4 data-page-node-id="MM3k8Y2PipqALIAMNGKtkL">支持</h4>
         <ul data-page-node-id="3QZp98MwT6ouevC2FCjgd1">
-          <li data-page-node-id="F1jRamjyhyvazDpe6kSplp"><a href="#" data-page-node-id="H3bdEtaVUA8wEvVseDx6aa">帮助中心</a></li>
           <li data-page-node-id="ptSM601HdjbrKXqfE2e0iN"><a href="#" data-page-node-id="XiEhNjPtufm0g9qhfoYHyr">隐私政策</a></li>
           <li data-page-node-id="0vg4WZE0qjjCXzUqeVyWoC"><a href="#" data-page-node-id="B8isUgRDTj5j9it14GUFzF">服务条款</a></li>
         </ul>
       </div>
     </div>
     <div class="foot-bottom" data-page-node-id="P2BQfPE5q1TNbl07s65HQ5">
-      <span data-page-node-id="wOzjZlE9OaELkuTlmLhiKk">© 2026 云启科技 CloudStart. 保留所有权利。</span>
+      <span data-page-node-id="wOzjZlE9OaELkuTlmLhiKk">© 2026 图论吞枣信息技术有限责任公司 保留所有权利。</span>
       <div class="foot-social" data-page-node-id="B51hy6ufNWDTEdhAGH2kAK">
-        <a href="#" aria-label="微博" data-page-node-id="TVCeHePU6ZP1W5F2kCFUUP">微博</a>
-        <a href="#" aria-label="微信" data-page-node-id="oOkFW7Qshk1vfgyt355m4u">微信</a>
+        <a href="#" aria-label="微博" data-page-node-id="TVCeHePU6ZP1W5F2kCFUUP">小红书</a>
+        <a href="#" aria-label="微信" data-page-node-id="oOkFW7Qshk1vfgyt355m4u">公众号</a>
         <a href="#" aria-label="领英" data-page-node-id="8I2Y4qLZlJDql7WB2r62df">LinkedIn</a>
       </div>
+    </div>
+    <div class="foot-icp">
+      <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">沪ICP备XXXXXXXX号-1</a>
+      <span class="dot">|</span>
+      <a href="http://www.beian.gov.cn/" target="_blank" rel="noopener noreferrer">沪公网安备 XXXXXXXX号</a>
     </div>
   </div>
 </footer>
