@@ -22,7 +22,7 @@ dependencies = [
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "config.settings"
 pythonpath = ["."]
-testpaths = ["website"]
+testpaths = ["pages"]
 python_files = ["test_*.py"]
 python_classes = ["Test*"]
 python_functions = ["test_*"]
@@ -33,10 +33,10 @@ addopts = [
 ]
 
 [tool.coverage.run]
-source = ["website"]
+source = ["pages"]
 omit = [
-    "isochrone/tests/*",
-    "isochrone/services/tests/*",
+    "pages/tests/*",
+    "pages/services/tests/*",
     "*/migrations/*",
     "*/management/*",
 ]
