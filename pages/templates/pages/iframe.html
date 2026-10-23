@@ -865,7 +865,7 @@ svg.lucide {
   color: var(--destructive);
 }
 
-html&gt;body{padding:0}&lt;/style&gt;
+html&gt;body{padding:0;overflow:hidden}&lt;/style&gt;
 &lt;/head&gt;
 &lt;body&gt;
 
@@ -874,6 +874,7 @@ html&gt;body{padding:0}&lt;/style&gt;
   &lt;div class=&quot;sa-stage&quot;&gt;
     &lt;canvas id=&quot;sa-canvas&quot; role=&quot;img&quot; aria-label=&quot;球形音频频谱：拖动可旋转球体，球面不同区域代表不同频率，半径起伏代表实时振幅&quot;&gt;&lt;/canvas&gt;
     &lt;div class=&quot;sa-readout text-small&quot; aria-live=&quot;polite&quot;&gt;&lt;span id=&quot;sa-state&quot;&gt;模拟频谱&lt;/span&gt; · 峰值频率 &lt;span id=&quot;sa-peak&quot;&gt;—&lt;/span&gt;&lt;/div&gt;
+    &lt;div class=&quot;sa-keywords&quot; id=&quot;sa-keywords&quot;&gt;&lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
 
@@ -884,6 +885,21 @@ html&gt;body{padding:0}&lt;/style&gt;
   #spherical-audio-root #sa-canvas:active { cursor: grabbing; }
   #spherical-audio-root .sa-readout { position: absolute; left: 30%; bottom: 0%; width: max-content; max-width: calc(100% - 24px); color: var(--muted-foreground); text-align: center; transform: translateX(-50%); pointer-events: none; }
   @media (max-width: 480px) { #spherical-audio-root .sa-stage { min-height: 300px; } }
+  #spherical-audio-root .sa-keywords { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; }
+  #spherical-audio-root .sa-keyword {
+    position: absolute; left: 0; top: 0;
+    padding: 15px 20px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0);
+    border: 1px solid rgba(255, 255, 255, 0);
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 50px; font-weight: 1000;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    pointer-events: none;
+    will-change: transform, opacity;
+    text-shadow: 0 0 12px rgba(100, 160, 255, 0.25);
+  }
 &lt;/style&gt;
 
 &lt;script type=&quot;module&quot;&gt;
@@ -922,6 +938,31 @@ html&gt;body{padding:0}&lt;/style&gt;
   });
   const glow = new THREE.Mesh(new THREE.SphereGeometry(1.68, 48, 32), glowMaterial);
   scene.add(glow);
+
+  const keywordGroup = new THREE.Group();
+  scene.add(keywordGroup);
+  const keywordTexts = [&#x27;Artificial Intelligence&#x27;, &#x27;Product-Marketing Fit&#x27;, &#x27;Agentic Development&#x27;,  &#x27;Industrial Information&#x27;];
+  const keywordRadius = 2;
+  const keywordObjs = [];
+  const keywordsEl = root.querySelector(&#x27;#sa-keywords&#x27;);
+  keywordTexts.forEach((text, i) =&gt; {
+    const phi = Math.acos(0.5 - (i + 0.5) / keywordTexts.length);
+    const theta = Math.PI * (1 + Math.sqrt(5)) * i;
+    const obj = new THREE.Object3D();
+    obj.position.setFromSphericalCoords(keywordRadius, phi, theta);
+    keywordGroup.add(obj);
+    const el = document.createElement(&#x27;span&#x27;);
+    el.className = &#x27;sa-keyword&#x27;;
+    el.textContent = text;
+    keywordsEl.appendChild(el);
+    keywordObjs.push({ obj, el });
+  });
+  let scrollRotation = 0;
+  window.addEventListener(&#x27;message&#x27;, (event) =&gt; {
+    if (event.data &amp;&amp; typeof event.data.scrollProgress === &#x27;number&#x27;) {
+      scrollRotation = event.data.scrollProgress * Math.PI * 2;
+    }
+  });
 
   const spectrum = new Uint8Array(128);
   const sensitivity = 1.4;
@@ -1050,6 +1091,20 @@ html&gt;body{padding:0}&lt;/style&gt;
     sphere.rotation.y = time * 0.12 + dragRotation.y + pointer.x * 0.12 * pointerInfluence;
     glow.position.copy(sphere.position);
     glow.rotation.copy(sphere.rotation);
+    keywordGroup.rotation.y = scrollRotation + time * 0.08;
+    keywordObjs.forEach(({ obj, el }) =&gt; {
+      const v = obj.position.clone().applyMatrix4(keywordGroup.matrixWorld);
+      v.project(camera);
+      if (v.z &gt; 1) { el.style.opacity = &#x27;0&#x27;; return; }
+      const x = (v.x * 0.5 + 0.5) * canvas.clientWidth;
+      const y = (-v.y * 0.5 + 0.5) * canvas.clientHeight;
+      const depthFactor = (1 - v.z) / 2;
+      const opacity = 0.80 + 0.85 * depthFactor;
+      const scale = 0.65 + 0.35 * depthFactor;
+      el.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%) scale(${scale})`;
+      el.style.opacity = String(opacity);
+      el.style.zIndex = String(Math.round(depthFactor * 100));
+    });
     renderer.render(scene, camera);
     requestAnimationFrame(animate);
   }

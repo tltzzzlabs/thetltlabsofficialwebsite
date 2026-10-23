@@ -70,8 +70,7 @@
   .hero iframe {
     width: 100vw;
     max-width: 100%;
-    height: 80vh;
-    min-height: 500px;
+    height: 600px;
     border: none;
     display: block;
     margin: 0 auto;
@@ -250,7 +249,7 @@
   @media (max-width: 600px) {
     .services { grid-template-columns: 1fr; }
     .hero { padding: 64px 0; }
-    .hero iframe { height: 60vh; min-height: 400px; }
+    .hero iframe { height: 400px; }
     .hero-stats { gap: 24px; }
   }
 </style>
@@ -344,6 +343,21 @@
     </div>
   </div>
 </footer>
+
+<script>
+(function () {
+  var iframe = document.querySelector('.hero iframe');
+  if (!iframe) return;
+  var hero = document.querySelector('.hero');
+  function onScroll() {
+    var rect = hero.getBoundingClientRect();
+    var progress = Math.max(0, -rect.top / rect.height);
+    iframe.contentWindow.postMessage({ scrollProgress: progress }, '*');
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+</script>
 
 </body>
 </html>
