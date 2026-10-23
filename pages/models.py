@@ -26,3 +26,25 @@ class Activity(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Project(models.Model):
+    title = models.CharField("项目名称", max_length=200)
+    description = models.TextField("项目描述", blank=True)
+    video = models.FileField(
+        "演示视频",
+        upload_to="projects/videos/",
+        help_text="推荐 MP4 格式 (H.264 编码)",
+    )
+    link = models.URLField("项目链接", blank=True)
+    order = models.PositiveIntegerField("排序", default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ["order", "-created_at"]
+        verbose_name = "项目"
+        verbose_name_plural = "项目"
+
+    def __str__(self):
+        return self.title

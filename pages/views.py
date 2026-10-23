@@ -7,7 +7,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_GET, require_POST
 
-from .models import Activity
+from .models import Activity, Project
 
 load_dotenv()
 logger = logging.getLogger(__name__)
@@ -16,5 +16,9 @@ logger = logging.getLogger(__name__)
 @require_GET
 def index(request):
     activities = Activity.objects.all()
-    return render(request, "pages/index.html", {"activities": activities})
+    projects = Project.objects.all()
+    return render(request, "pages/index.html", {
+        "activities": activities,
+        "projects": projects,
+    })
 

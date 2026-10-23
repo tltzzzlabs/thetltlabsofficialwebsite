@@ -94,7 +94,7 @@
   .hero-stats .stat span { font-size: 14px; color: var(--ink-soft); }
 
   /* ===== 通用 section ===== */
-  section { padding: 88px 0; }
+  section { padding: 100px 0; }
   .section-head { max-width: 620px; margin-bottom: 32px; text-align: left; }
   .section-head .tag { font-size: 13px; font-weight: 600; letter-spacing: 1.2px; color: var(--brand); text-transform: uppercase; }
   .section-head h3 { font-size: 17px; color: var(--ink-soft); font-weight: 700; letter-spacing: -0.5px; margin: 0 0 12px; }
@@ -154,18 +154,36 @@
     z-index: 1;
   }
 
-  /* ===== 视频块 ===== */
-  .video-band { background: var(--bg-soft); }
-  .video-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 22px; align-items: stretch; width: 100%;}
+  /* ===== 项目轮播 ===== */
+  .video-band { background: var(--bg-soft); overflow: hidden;}
+  .carousel {
+    display: flex; gap: 24px;
+    overflow-x: auto; scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+    padding: 0;
+    scrollbar-width: none; cursor: grab; user-select: none;
+    scroll-behavior: auto;
+  }
+  .carousel::-webkit-scrollbar { display: none; }
+  .carousel.is-dragging { cursor: grabbing; scroll-snap-type: none; }
+  .carousel.is-dragging .video-feature video { pointer-events: none; }
+
+  .carousel-slide {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+    display: flex; align-items: center;
+  }
+  .video-grid { display: grid; grid-template-columns: 1.8fr 1fr; gap: 22px; align-items: stretch; width: 100%;}
   .video-feature {
     border-radius: var(--radius); overflow: hidden; position: relative;
-    box-shadow: var(--shadow); background: #000;
+    background: var(--bg-soft); aspect-ratio: 4 / 3;
+    display: flex; align-items: center; justify-content: center;
   }
-  .video-feature video { width: 100%; height: 100%; object-fit: cover; }
+  .video-feature video { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
   .video-side { display: flex; flex-direction: column; gap: 22px; }
   .video-side .side-card {
     flex: 1; border-radius: var(--radius); overflow: hidden; position: relative;
-    background: var(--bg-soft); box-shadow: var(--shadow); padding: 28px 24px;
+    background: var(--bg-soft); padding: 28px 24px;
     display: flex; flex-direction: column; justify-content: center;
     transition: transform .3s ease;
   }
@@ -272,23 +290,39 @@
   {% include "pages/iframe.html" %}
 </section>
 
-<!-- ===== 视频块 ===== -->
-<section class="video-band" id="video" data-page-node-id="xO5dS1OZJihgxIt6qsjHr1">
-  <div class="wrap" data-page-node-id="Gu4iQNY8GHxtVCFpIdhHhQ">
-    <div class="video-grid" data-page-node-id="62vIbhzXWHUKtDi7PGFYWZ">
-      <div class="video-feature" data-page-node-id="dg18rCw4585dxV1hTGMxni">
-        <video muted loop playsinline autoplay controls data-page-node-id="awbuRYUi7UCT7gWtHwA5GD">
-          <source src="/static/pages/demo.mov" type="video/mp4" data-page-node-id="gFuVn7s6e2RVVKJwCGR40X" />
-        </video>
-        <div class="video-overlay" data-page-node-id="0t8aFvhtMepLLz4c9ASfd0"></div>
-      </div>
-      <div class="video-side">
-        <div class="side-card">
-          <h1>Ordinary 智能笔记</h1>
-          <p>面向 STEM 领域的智能笔记工具，借助多模态大模型将零散图文转化为整洁、可编辑的结构化文档，提供智能排版与快速查询功能。</p>
+<!-- ===== 项目展示 ===== -->
+<section class="video-band" id="projects">
+  <div class="carousel" id="projectCarousel">
+    {% for project in projects %}
+    <div class="carousel-slide">
+      <div class="wrap">
+        <div class="video-grid">
+          <div class="video-feature">
+            <video muted loop playsinline autoplay controls>
+              <source src="{{ project.video.url }}" type="video/mp4" />
+            </video>
+          </div>
+          <div class="video-side">
+            <div class="side-card">
+              <h1>{{ project.title }}</h1>
+              <p>{{ project.description }}</p>
+              {% if project.link %}
+              <a href="{{ project.link }}" target="_blank" rel="noopener">
+                <button>了解更多</button>
+              </a>
+              {% endif %}
+            </div>
+          </div>
         </div>
       </div>
     </div>
+    {% empty %}
+    <div class="carousel-slide">
+      <div class="wrap" style="text-align: center; padding: 60px 20px; color: rgba(255,255,255,0.5);">
+        <p>暂无项目，请在后台添加</p>
+      </div>
+    </div>
+    {% endfor %}
   </div>
 </section>
 
@@ -356,6 +390,54 @@
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+})();
+</script>
+
+<script>
+(function () {
+  var carousel = document.getElementById('projectCarousel');
+  if (!carousel) return;
+
+  var isDragging = false, startX = 0, scrollLeft = 0, rafId = null, targetScroll = 0;
+
+  function updateScroll() {
+    carousel.scrollLeft = targetScroll;
+    rafId = null;
+  }
+
+  carousel.addEventListener('mousedown', function (e) {
+    isDragging = true;
+    carousel.classList.add('is-dragging');
+    startX = e.pageX - carousel.offsetLeft;
+    scrollLeft = carousel.scrollLeft;
+    targetScroll = scrollLeft;
+    e.preventDefault();
+  });
+  carousel.addEventListener('mousemove', function (e) {
+    if (!isDragging) return;
+    var x = e.pageX - carousel.offsetLeft;
+    targetScroll = scrollLeft - (x - startX);
+    if (!rafId) rafId = requestAnimationFrame(updateScroll);
+  });
+  carousel.addEventListener('mouseup', function () {
+    isDragging = false;
+    carousel.classList.remove('is-dragging');
+  });
+  carousel.addEventListener('mouseleave', function () {
+    isDragging = false;
+    carousel.classList.remove('is-dragging');
+  });
+
+  var touchStartX = 0, touchScrollLeft = 0;
+  carousel.addEventListener('touchstart', function (e) {
+    touchStartX = e.touches[0].pageX;
+    touchScrollLeft = carousel.scrollLeft;
+  }, { passive: true });
+  carousel.addEventListener('touchmove', function (e) {
+    carousel.scrollLeft = touchScrollLeft + (touchStartX - e.touches[0].pageX);
+  }, { passive: true });
+
+  carousel.addEventListener('dragstart', function (e) { e.preventDefault(); });
 })();
 </script>
 
