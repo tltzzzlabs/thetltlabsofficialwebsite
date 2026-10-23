@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="OKfAwgByIcXTO6Z75EZPjJ">
+<head data-page-node-id="TgllWk3QXFozfnFf5hMRF1">
+<meta charset="UTF-8" data-page-node-id="6nFh3a9H2nA8Rr2J9TIfk4" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" data-page-node-id="uZPnCXasXGND1urTb27Glh" />
+<title>图论吞枣实验室 · 企业官网</title>
+<meta name="description" content="计算机科普创新平台" data-page-node-id="2zh8I87al1MljW7nnn7aIs" />
+<link rel="preconnect" href="https://fonts.googleapis.com" data-page-node-id="2JO95ctiPnRlVb7ssoioFp" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin data-page-node-id="L4oNz0UKgI1aQ8JcJU6bd6" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet" data-page-node-id="ECynZwkAt1weMYLCz7odDC" />
+<style>
+  :root {
+    /*--bg: #000000FF;*/
+    --bg: #212020;
+    --bg-soft: #212020;
+    --ink: #111318;
+    --ink-soft: #ffffff;
+    --line: #e7e9ee;
+    --brand: #1f5eff;
+    --brand-dark: #1747c9;
+    --radius: 14px;
+    --maxw: 1200px;
+    --shadow: 0 20px 50px -20px rgba(17, 19, 24, 0.18);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: "Inter", "Noto Sans SC", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  img, video { display: block; max-width: 100%; }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+  /* ===== 页眉 ===== */
+  header.site {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--bg);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .nav {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 68px;
+  }
+  .logo { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; letter-spacing: 0.5px; color: #fff; }
+  .logo img { height: 36px; width: auto; border-radius: 8px; }
+  .menu { display: flex; align-items: center; gap: 34px; font-size: 15px; color: rgba(255, 255, 255, 0.7); }
+  .menu a { transition: color .2s; }
+  .menu a:hover { color: #fff; }
+  .nav-cta { display: flex; align-items: center; gap: 14px; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 999px; font-weight: 500; font-size: 14px;
+    padding: 10px 20px; transition: all .2s; cursor: pointer; border: none;
+  }
+  .btn-primary { background: var(--brand); color: #fff; }
+  .btn-primary:hover { background: var(--brand-dark); transform: translateY(-1px); }
+  .btn-ghost { color: rgba(255, 255, 255, 0.8); }
+  .btn-ghost:hover { color: #fff; }
+  .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 8px; filter: invert(1); }
+
+  /* ===== Hero ===== */
+  .hero { position: relative; padding: 96px 0 40px; text-align: center; overflow: hidden; }
+  .hero iframe {
+    width: 100vw;
+    max-width: 100%;
+    height: 80vh;
+    min-height: 500px;
+    border: none;
+    display: block;
+    margin: 0 auto;
+  }
+  .hero::before {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    /*background:*/
+    /*  radial-gradient(600px 320px at 50% -10%, rgba(31, 94, 255, 0.12), transparent 70%),*/
+    /*  radial-gradient(500px 300px at 85% 20%, rgba(106, 92, 255, 0.10), transparent 70%);*/
+  }
+  .hero .eyebrow {
+    display: inline-block; font-size: 13px; font-weight: 600; letter-spacing: 1.5px;
+    text-transform: uppercase; color: var(--brand); margin-bottom: 20px;
+  }
+  .hero h1 { font-size: clamp(34px, 5.4vw, 60px); font-weight: 700; line-height: 1.15; letter-spacing: -1px; margin-bottom: 20px; }
+  .hero h1 em { font-style: normal; background: linear-gradient(135deg, var(--brand), #6a5cff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .hero p { font-size: 18px; color: var(--ink-soft); max-width: 640px; margin: 0 auto 34px; }
+  .hero-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .hero-stats { display: flex; gap: 48px; justify-content: center; margin-top: 56px; flex-wrap: wrap; }
+  .hero-stats .stat b { display: block; font-size: 30px; font-weight: 700; }
+  .hero-stats .stat span { font-size: 14px; color: var(--ink-soft); }
+
+  /* ===== 通用 section ===== */
+  section { padding: 88px 0; }
+  .section-head { max-width: 620px; margin-bottom: 32px; text-align: left; }
+  .section-head .tag { font-size: 13px; font-weight: 600; letter-spacing: 1.2px; color: var(--brand); text-transform: uppercase; }
+  .section-head h3 { font-size: 17px; color: var(--ink-soft); font-weight: 700; letter-spacing: -0.5px; margin: 0 0 12px; }
+  .section-head p { color: var(--ink-soft); font-size: 17px; margin: 0; line-height: 1.6; }
+
+  /* ===== 活动列表 ===== */
+  .activity-list {
+    display: flex; flex-direction: column; gap: 12px;
+    list-style: none; padding: 0; margin: 0 0 24px;
+    text-align: left;
+  }
+  .activity-list li {
+    padding: 16px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .activity-list li:last-child {
+    border-bottom: none;
+  }
+  .activity-list h3 {
+    font-size: 14px; font-weight: 600; color: #fff; margin: 0; line-height: 1.5;
+  }
+  .activity-list h3 a {
+    color: #fff; text-decoration: none;
+  }
+  .activity-list h3 a:hover {
+    text-decoration: underline;
+  }
+  .activity-list p {
+    font-size: 12px; color: rgba(255, 255, 255, 0.7); line-height: 1.6;
+  }
+  .activity-empty { text-align: center; padding: 60px 20px; color: rgba(255,255,255,0.5); font-size: 16px; }
+  .activity-contact {
+    display: inline-block; color: #fff; font-size: 14px; text-decoration: none;
+    padding: 12px 0; line-height: 1.5;
+  }
+  .activity-contact:hover { text-decoration: underline}
+
+  /* ===== 弦理论分割 ===== */
+  .wave-canvas-wrap {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 180px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .wave-canvas-wrap canvas {
+    width: 100%;
+    height: 100%;
+  }
+  #gallery {
+    position: relative;
+    overflow: hidden;
+  }
+  #gallery .wrap {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ===== 视频块 ===== */
+  .video-band { background: var(--bg-soft); }
+  .video-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 22px; align-items: stretch; width: 100%;}
+  .video-feature {
+    border-radius: var(--radius); overflow: hidden; position: relative;
+    box-shadow: var(--shadow); background: #000;
+  }
+  .video-feature video { width: 100%; height: 100%; object-fit: cover; }
+  .video-side { display: flex; flex-direction: column; gap: 22px; }
+  .video-side .side-card {
+    flex: 1; border-radius: var(--radius); overflow: hidden; position: relative;
+    background: var(--bg-soft); box-shadow: var(--shadow); padding: 28px 24px;
+    display: flex; flex-direction: column; justify-content: center;
+    transition: transform .3s ease;
+  }
+  .video-side .side-card:hover { transform: translateY(-4px); }
+  .video-side .side-card .ico {
+    width: 44px; height: 44px; border-radius: 12px; margin-bottom: 16px;
+    display: grid; place-items: center; font-size: 20px;
+    background: rgba(31, 94, 255, 0.10); color: var(--brand);
+  }
+  .video-side .side-card h1 { font-size: 17px; color: var(--ink-soft); font-weight: 600; margin-bottom: 8px; }
+  .video-side .side-card p { font-size: 14px; color: var(--ink-soft); line-height: 1.5; }
+  .video-side .side-card button {
+    margin-top: 16px; padding: 10px 24px; border-radius: 8px;
+    background: var(--brand); color: #fff; border: none; font-size: 14px;
+    font-weight: 500; cursor: pointer; transition: all .2s;
+  }
+  .video-side .side-card button:hover { background: var(--brand-dark); transform: translateY(-2px); }
+  .video-overlay {
+    position: absolute; left: 16px; bottom: 16px; color: #fff; z-index: 2;
+    width: 100%;
+    padding: 40px 20px 16px; left: 0; bottom: 0;
+  }
+  .video-overlay b { display: block; font-size: 16px; }
+  .video-overlay span { font-size: 13px; opacity: 0.85; }
+
+  /* ===== 服务/数据块 ===== */
+  .services { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .service {
+    border: 1px solid var(--line); border-radius: var(--radius);
+    padding: 30px 28px; transition: all .25s;
+  }
+  .service:hover { border-color: var(--brand); box-shadow: var(--shadow); }
+  .service .ico {
+    width: 46px; height: 46px; border-radius: 12px; margin-bottom: 20px;
+    display: grid; place-items: center; font-size: 22px;
+    background: rgba(31, 94, 255, 0.10);
+  }
+  .service h3 { font-size: 19px; margin-bottom: 10px; color: var(--ink-soft);}
+  .service p { color: var(--ink-soft); font-size: 15px; }
+
+  /* ===== CTA ===== */
+  .cta { text-align: center; }
+  .cta .box {
+    background: linear-gradient(135deg, var(--brand), #6a5cff);
+    border-radius: 22px; padding: 64px 40px; color: #fff;
+  }
+  .cta h2 { font-size: clamp(26px, 3.4vw, 38px); font-weight: 700; margin-bottom: 14px; }
+  .cta p { font-size: 17px; opacity: 0.9; max-width: 520px; margin: 0 auto 28px; }
+  .cta .btn-white { background: #fff; color: var(--brand); font-weight: 600; }
+
+  /* ===== 页脚 ===== */
+  footer.site { background: var(--bg); color: #ffffff; padding: 48px 0 0; }
+  .foot-grid { display: flex; justify-content: center; gap: 32px; padding-bottom: 32px; }
+  .foot-grid ul { list-style: none; display: flex; gap: 24px; }
+  .foot-grid ul li { margin: 0; }
+  .foot-grid ul a { font-size: 14px; color: #8b90a0; transition: color .2s; }
+  .foot-grid ul a:hover { color: #fff; }
+  .foot-bottom {
+    border-top: 1px solid rgba(255,255,255,0.08); padding: 20px 0;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 13px; color: #6b7080; flex-wrap: wrap; gap: 12px;
+  }
+  .foot-social { display: flex; gap: 14px; }
+  .foot-social a { color: #8b90a0; font-size: 14px; }
+  .foot-social a:hover { color: #fff; }
+  .foot-icp {
+    text-align: center; padding: 16px 0 24px; font-size: 12px; color: #6b7080;
+  }
+  .foot-icp a { color: #6b7080; text-decoration: none; transition: color .2s; }
+  .foot-icp a:hover { color: #fff; }
+  .foot-icp .dot { margin: 0 8px; }
+
+  /* ===== 响应式 ===== */
+  @media (max-width: 960px) {
+    .services { grid-template-columns: repeat(2, 1fr); }
+    .video-grid { grid-template-columns: 1fr; }
+    .foot-grid { flex-direction: column; align-items: center; gap: 16px; }
+    .menu, .nav-cta .btn-ghost { display: none; }
+    .hamburger { display: block; }
+  }
+  @media (max-width: 600px) {
+    .services { grid-template-columns: 1fr; }
+    .hero { padding: 64px 0; }
+    .hero iframe { height: 60vh; min-height: 400px; }
+    .hero-stats { gap: 24px; }
+  }
+</style>
+</head>
+<body data-page-node-id="oxPn3RQIRoyBtAn6CSVjVf">
+
+<!-- ===== 页眉 ===== -->
+<header class="site" data-page-node-id="xLowUoQ3OCUkYD9ZQRgHlN">
+  <div class="wrap nav" data-page-node-id="FxsbAJSDZdPE22233LC8Rb">
+    <a href="#" class="logo" data-page-node-id="vozdjopeftyLU5eZ1Sj9kE"><img src="/static/pages/Artboard.png" alt="图论吞枣实验室" data-page-node-id="4FQJexMrV4ot9y3ljKAzJ9" />图论吞枣实验室 - The TLT Labs</a>
+    <nav class="menu" data-page-node-id="lor7TndLSQlcKOkYvgRpcm">
+      <a href="#about" data-page-node-id="03KdIHMwHOJiOIbBB21gAq">公司简介</a>
+      <a href="mailto:contact@example.com" data-page-node-id="11QDR5CYfGYubGhZl2MuxB">联系我们</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ===== Hero ===== -->
+<section class="hero" id="about" data-page-node-id="98MkboJ4kDnuMHVEnvjET4">
+  {% include "pages/iframe.html" %}
+</section>
+
+<!-- ===== 视频块 ===== -->
+<section class="video-band" id="video" data-page-node-id="xO5dS1OZJihgxIt6qsjHr1">
+  <div class="wrap" data-page-node-id="Gu4iQNY8GHxtVCFpIdhHhQ">
+    <div class="video-grid" data-page-node-id="62vIbhzXWHUKtDi7PGFYWZ">
+      <div class="video-feature" data-page-node-id="dg18rCw4585dxV1hTGMxni">
+        <video muted loop playsinline autoplay controls data-page-node-id="awbuRYUi7UCT7gWtHwA5GD">
+          <source src="/static/pages/demo.mov" type="video/mp4" data-page-node-id="gFuVn7s6e2RVVKJwCGR40X" />
+        </video>
+        <div class="video-overlay" data-page-node-id="0t8aFvhtMepLLz4c9ASfd0"></div>
+      </div>
+      <div class="video-side">
+        <div class="side-card">
+          <h1>Ordinary 智能笔记</h1>
+          <p>面向 STEM 领域的智能笔记工具，借助多模态大模型将零散图文转化为整洁、可编辑的结构化文档，提供智能排版与快速查询功能。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 活动列表 ===== -->
+<section id="gallery">
+  <div class="wrap">
+    <div class="section-head">
+      <h3>了解最新的行业活动</h3>
+      <p>Hackathon, Conferences, Workshops</p>
+    </div>
+    <ul class="activity-list">
+      {% for activity in activities %}
+      <li>
+        <h3>
+          <a href="{{activity.link}}">
+            {{ activity.title }}   {{activity.start_date}} - {{ activity.end_date }}
+          </a>
+        </h3>
+
+      </li>
+      {% empty %}
+      <li class="activity-empty">暂无活动，敬请期待</li>
+      {% endfor %}
+    </ul>
+    <a href="mailto:xueyanwang@thetltlabs.com" class="activity-contact">联系我们帮你寻找伙伴</a>
+  </div>
+</section>
+
+<!-- ===== 页脚 ===== -->
+<footer class="site" data-page-node-id="FqbRwhboscNOFVowt9hgcy">
+  <div class="wrap" data-page-node-id="5tWF8ibenh1AfSeINMBi4a">
+    <div class="foot-grid" data-page-node-id="fB2InsEW86WorgqwtkCyw4">
+      <div data-page-node-id="WtK3qP0WvKqyw4NrEwpLrH">
+        <ul data-page-node-id="3QZp98MwT6ouevC2FCjgd1">
+          <li data-page-node-id="ptSM601HdjbrKXqfE2e0iN"><a href="#" data-page-node-id="XiEhNjPtufm0g9qhfoYHyr">隐私政策</a></li>
+          <li data-page-node-id="0vg4WZE0qjjCXzUqeVyWoC"><a href="#" data-page-node-id="B8isUgRDTj5j9it14GUFzF">服务条款</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom" data-page-node-id="P2BQfPE5q1TNbl07s65HQ5">
+      <span data-page-node-id="wOzjZlE9OaELkuTlmLhiKk">© 2026 图论吞枣信息技术（上海）有限责任公司 保留所有权利</span>
+      <div class="foot-social" data-page-node-id="B51hy6ufNWDTEdhAGH2kAK">
+        <a href="#" aria-label="微博" data-page-node-id="TVCeHePU6ZP1W5F2kCFUUP">小红书</a>
+        <a href="#" aria-label="微信" data-page-node-id="oOkFW7Qshk1vfgyt355m4u">公众号</a>
+        <a href="#" aria-label="领英" data-page-node-id="8I2Y4qLZlJDql7WB2r62df">LinkedIn</a>
+      </div>
+    </div>
+    <div class="foot-icp">
+      <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">沪ICP备2026043491号-1</a>
+      <span class="dot">|</span>
+      <a href="http://www.beian.gov.cn/" target="_blank" rel="noopener noreferrer">沪公网安备 31010502008134号</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
