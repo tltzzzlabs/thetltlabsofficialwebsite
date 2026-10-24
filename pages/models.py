@@ -31,11 +31,7 @@ class Activity(models.Model):
 class Project(models.Model):
     title = models.CharField("项目名称", max_length=200)
     description = models.TextField("项目描述", blank=True)
-    video = models.FileField(
-        "演示视频",
-        upload_to="projects/videos/",
-        help_text="推荐 MP4 格式 (H.264 编码)",
-    )
+    video = models.URLField("视频链接", blank=True, help_text="Cloudinary 或其他视频平台的嵌入链接")
     link = models.URLField("项目链接", blank=True)
     order = models.PositiveIntegerField("排序", default=0)
     created_at = models.DateTimeField(auto_now_add=True)
