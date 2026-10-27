@@ -86,15 +86,28 @@ DATABASES = {
 
 if not DEBUG and os.environ.get("POSTGRES_URL"):
     import dj_database_url
+    # DATABASES = {
+    #     "default": dj_database_url.config(
+    #         default=os.environ["POSTGRES_URL"],
+    #         conn_max_age=600,
+    #         ssl_require=True,
+    #     )
+    # }
     DATABASES = {
-        "default": dj_database_url.config(
-            default=os.environ["POSTGRES_URL"],
-            conn_max_age=600,
-            ssl_require=True,
-        )
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ.get('PGDATABASE'),
+            'USER': os.environ.get('PGUSER'),
+            'PASSWORD': os.environ.get('PGPASSWORD'),
+            'HOST': os.environ.get('PGHOST'),
+            'PORT': os.environ.get('PGPORT', 5432),
+            'OPTIONS': {
+                'sslmode': 'require',
+            },
+            'DISABLE_SERVER_SIDE_CURSORS': True,
+            'CONN_HEALTH_CHECKS': True,
+        }
     }
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
