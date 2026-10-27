@@ -1,0 +1,52 @@
+[
+  {
+    "model": "pages.activity",
+    "pk": 1,
+    "fields": {
+      "title": "图论吞枣实验室成立",
+      "description": "实验室正式成立，专注于图论算法和可视化研究。",
+      "start_date": "2024-01-01",
+      "end_date": null,
+      "location": "线上",
+      "status": "completed",
+      "category": "里程碑",
+      "organizer": "图论吞枣团队"
+    }
+  },
+  {
+    "model": "pages.activity",
+    "pk": 2,
+    "fields": {
+      "title": "首次开源项目发布",
+      "description": "发布第一个开源可视化工具，支持交互式图论算法演示。",
+      "start_date": "2024-06-01",
+      "end_date": "2024-06-01",
+      "location": "GitHub",
+      "status": "completed",
+      "category": "发布",
+      "organizer": "图论吞枣团队"
+    }
+  },
+  {
+    "model": "pages.project",
+    "pk": 1,
+    "fields": {
+      "title": "图论可视化平台",
+      "description": "交互式图论算法可视化平台，支持最短路径、最小生成树等经典算法的实时演示。",
+      "video": "https://res.cloudinary.com/demo/video/sample.mp4",
+      "link": "https://github.com/your-repo/graph-viz",
+      "order": 1
+    }
+  },
+  {
+    "model": "pages.project",
+    "pk": 2,
+    "fields": {
+      "title": "智能路径规划系统",
+      "description": "基于图论算法的智能路径规划系统，应用于物流优化和交通调度。",
+      "video": "https://res.cloudinary.com/demo/video/sample.mp4",
+      "link": "https://github.com/your-repo/path-planner",
+      "order": 2
+    }
+  }
+]

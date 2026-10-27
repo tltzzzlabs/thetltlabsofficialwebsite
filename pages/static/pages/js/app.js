@@ -1,135 +1,17 @@
 (function () {
-    var form = document.getElementById("search-form");
-    var input = document.getElementById("address-input");
-    var btn = document.getElementById("search-btn");
-    var resetBtn = document.getElementById("reset-btn");
-    var ruleBtn = document.getElementById("rule-btn");
-    var infoPanel = document.getElementById("info-panel");
-    var poiPanel = document.getElementById("poi-panel");
-    var loading = document.getElementById("loading");
+    var gallery = document.getElementById("projectCarousel");
+    var projects = []
 
-    var map = null;
-    var mapOverlays = [];
-    var mapMarkers = [];
-    var hasResult = false;
-    var requestId = 0;
-    var currentResult = null;
-
-    var SHANGHAI_CENTER = { lat: 31.2304, lng: 121.4737 };
-    var DEFAULT_ZOOM = 18;
-    var DEFAULT_TILT = 50;
-
-    var mapErrorEl = document.getElementById("map-error");
-    var mapErrorDetail = document.getElementById("map-error-detail");
-
-    function showMapError(msg) {
-        mapErrorDetail.textContent = msg;
-        mapErrorEl.style.display = "flex";
-    }
-
-    var baiduMapLoaded = false;
-    var baiduMapTimer = setTimeout(function () {
-        if (!baiduMapLoaded) {
-            showMapError("百度地图 SDK 加载超时，请检查网络连接或 AK 配置（当前 AK: " + (window.BAIDU_AK || "未设置") + "）");
+    gallery.addEventListener(
+        "DOMContentLoaded",
+        function () {
+            fetch("")
+            initProjects();
         }
-    }, 10000);
+    )
 
-    function initMap(center) {
-        try {
-            map = new BMapGL.Map("bmap", {
-                displayOptions: {
-                    building: true,
-                    skyColors: ["#e8f4fd", "#b8dff5"],
-                },
-            });
-            var point = new BMapGL.Point(center.lng, center.lat);
-            map.centerAndZoom(point, DEFAULT_ZOOM);
-            map.enableScrollWheelZoom(true);
-            map.setTilt(DEFAULT_TILT);
-            map.setHeading(0);
-        } catch (e) {
-            showMapError("地图初始化失败: " + e.message);
-        }
-    }
+    function initProjects() {
 
-    window.initBaiduMap = function () {
-        baiduMapLoaded = true;
-        clearTimeout(baiduMapTimer);
-        initMap(SHANGHAI_CENTER);
-        restoreMapState();
-    };
-
-    function restoreMapState() {
-        var savedState = localStorage.getItem("map_state");
-        if (!savedState) return;
-        try {
-            var data = JSON.parse(savedState);
-            localStorage.removeItem("map_state");
-            data.center = json.load(localStorage.getItem("map_center"));
-            showResult(data);
-        } catch (e) {
-            console.warn("Failed to restore map state:", e);
-        }
-    }
-
-    var CATEGORY_COLORS = {
-        medical: "#f5222d",
-        education: "#fa8c16",
-        commercial: "#52c41a",
-        elderly_care: "#eb2f96",
-        transport: "#1890ff",
-        government: "#722ed1",
-        community: "#13c2c2",
-        financial: "#faad14",
-        recreation: "#2f54eb",
-    };
-
-    var LEVEL_COLORS = {
-        "优秀": "#52c41a", "良好": "#1890ff", "一般": "#faad14",
-        "较差": "#fa8c16", "严重不足": "#f5222d",
-    };
-
-    var allPois = [];
-    var poiLabels = [];
-    var filterEl = document.getElementById("poi-filter");
-
-    filterEl.addEventListener("click", function (e) {
-        var btn = e.target.closest(".poi-filter-btn");
-        if (!btn) return;
-        filterEl.querySelectorAll(".poi-filter-btn").forEach(function (b) {
-            b.classList.remove("active");
-        });
-        btn.classList.add("active");
-        renderPoiList(btn.dataset.category);
-        updatePoiMarkers(btn.dataset.category)
-    });
-
-    resetBtn.addEventListener("click", clearAll);
-
-    function clearAll() {
-        clearMap();
-        mapOverlays = [];
-        mapMarkers = [];
-        hasResult = false;
-        input.value = '';
-        infoPanel.style.display = "none";
-        poiPanel.style.display = "none";
-        document.getElementById("map-container").style.right = "0";
-        resetBtn.style.display = "none";
-
-        map.setCenter(new BMapGL.Point(SHANGHAI_CENTER.lng, SHANGHAI_CENTER.lat));
-        map.setTilt(DEFAULT_TILT);
-        map.setHeading(0);
-    }
-
-    function clearMap() {
-        if (!map) return;
-        mapOverlays.forEach(function (o) { map.removeOverlay(o); });
-        mapMarkers.forEach(function (m) { map.removeOverlay(m); });
-        poiLabels.forEach(function (l) { map.removeOverlay(l); });
-        mapOverlays = [];
-        mapMarkers = [];
-        poiLabels = [];
     }
 
     form.addEventListener("submit", function (e) {
@@ -140,13 +22,13 @@
 
         var thisRequestId = ++requestId;
 
-        fetch("/api/calculate/", {
+        fetch("/api/getblobs", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "X-CSRFToken": getCookie("csrftoken"),
             },
-            body: JSON.stringify({ community: community }),
+            body: JSON.stringify({ projectId: projectId }),
         })
             .then(function (resp) {
                 return resp.json().then(function (data) {
@@ -166,60 +48,6 @@
                 if (thisRequestId === requestId) setLoading(false);
             });
     });
-
-    function showResult(data) {
-        currentResult = data;
-        infoPanel.style.display = "block";
-        resetBtn.style.display = "inline-block";
-
-        clearMap();
-        map.setCenter(new BMapGL.Point(data.center.lng, data.center.lat));
-        map.setTilt(DEFAULT_TILT);
-        map.setHeading(0);
-
-        if (data.boundary && data.boundary.length > 0) {
-            renderBoundary(data.boundary);
-        }
-
-        addCenterMarker(data.center);
-
-        document.getElementById("info-address").textContent = data.address;
-        document.getElementById("info-coords").textContent =
-            data.center.lat.toFixed(4) + ", " + data.center.lng.toFixed(4);
-        document.getElementById("info-budget").textContent = data.budget + "m";
-
-        if (data.poi) {
-            showPoiData(data);
-            addPoiMarkers(allPois, "all");
-        }
-
-        hasResult = true;
-    }
-
-    function renderBoundary(boundary) {
-        var path = boundary.map(function (p) {
-            return new BMapGL.Point(p[1], p[0]);
-        });
-
-        var polygon = new BMapGL.Polygon(path, {
-            strokeColor: "#1890ff",
-            strokeWeight: 2,
-            strokeOpacity: 0.8,
-            strokeStyle: "dash",
-            fillColor: "#1890ff",
-            fillOpacity: 0.12,
-        });
-
-        map.addOverlay(polygon);
-        mapOverlays.push(polygon);
-
-        polygon.addEventListener("click", function () {
-            if (currentResult) {
-                localStorage.setItem("analysis_data", JSON.stringify(currentResult));
-                window.location.href = "/analysis/";
-            }
-        });
-    }
 
     function addCenterMarker(center) {
         var point = new BMapGL.Point(center.lng, center.lat);
@@ -358,45 +186,6 @@
             row.appendChild(val);
             el.appendChild(row);
         });
-    }
-
-    function showBlindSpots(blind_spot) {
-        answer_type = blind_spot["answer_type"] // number
-        llm_result = blind_spot["llm_result"] // string
-        keyword_result = blind_spot["keyword_result"] // list[dict]
-
-        var el = document.getElementById("blind-spots");
-        el.innerHTML = "";
-
-        if (answer_type === -1) {
-            el.style.display = "none";
-            return;
-        }
-
-        el.style.display = "block";
-        var title = document.createElement("div");
-        title.className = "blind-spots-title";
-        title.textContent = "服务盲区检测";
-        el.appendChild(title);
-
-        if (answer_type === 1) {
-            var reason = document.createElement("div");
-            reason.className = "blind-spots-llm-result";
-            reason.textContent = llm_result;
-            el.appendChild(reason)
-        } else {
-            var tags = document.createElement("div");
-            tags.className = "blind-spots-tags";
-
-            keyword_result.forEach(function (spot) {
-                var tag = document.createElement("span");
-                tag.className = "blind-spot-tag";
-                tag.textContent = "缺少" + spot.label;
-                tags.appendChild(tag);
-            });
-
-            el.appendChild(tags);
-        }
     }
 
     function renderPoiList(filterCategory) {

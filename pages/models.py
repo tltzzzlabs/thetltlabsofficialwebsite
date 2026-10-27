@@ -2,18 +2,10 @@ from django.db import models
 
 
 class Activity(models.Model):
-    STATUS_CHOICES = [
-        ("upcoming", "即将举行"),
-        ("ongoing", "进行中"),
-        ("ended", "已结束"),
-    ]
-
     title = models.CharField("标题", max_length=200)
-    start_date = models.DateField("开始日期", default=None)
-    end_date = models.DateField("结束日期", default=None)
-    location = models.CharField("活动地点", max_length=200)
+    start_date = models.DateField("开始日期", default="1970-01-01")
+    end_date = models.DateField("结束日期", default="1970-01-01")
     link = models.URLField("活动链接", blank=True)
-    status = models.CharField("状态", max_length=10, choices=STATUS_CHOICES, default="upcoming")
     category = models.CharField("分类标签", max_length=100, blank=True)
     organizer = models.CharField("组织者", max_length=100, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -31,8 +23,8 @@ class Activity(models.Model):
 class Project(models.Model):
     title = models.CharField("项目名称", max_length=200)
     description = models.TextField("项目描述", blank=True)
-    video = models.URLField("视频链接", blank=True, help_text="Cloudinary 或其他视频平台的嵌入链接")
-    link = models.URLField("项目链接", blank=True)
+    video = models.URLField("视频链接", blank=True)
+    link = models.CharField("本地链接", max_length=500, blank=True)
     order = models.PositiveIntegerField("排序", default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
