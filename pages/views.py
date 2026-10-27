@@ -20,4 +20,5 @@ def index(request):
     return render(request, "pages/index.html", {
         "activities": activities,
         "projects": projects,
+        "localdev": settings.DEBUG,
     })

@@ -300,7 +300,11 @@
         <div class="video-grid">
           <div class="video-feature">
             <video muted loop playsinline autoplay controls>
+              {% if localdev %}
               <source src="{{ project.link }}" type="video/mp4" />
+              {% else %}
+              <source src="{{ project.video }}" type="video/mp4" />
+              {% endif %}
             </video>
           </div>
           <div class="video-side">
