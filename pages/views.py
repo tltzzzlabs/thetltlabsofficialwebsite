@@ -21,4 +21,3 @@ def index(request):
         "activities": activities,
         "projects": projects,
     })
-
