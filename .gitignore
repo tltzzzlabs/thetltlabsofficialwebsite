@@ -227,3 +227,4 @@ media/
 /.idea/website.iml
 .vercel
 .env*
+staticfiles/
