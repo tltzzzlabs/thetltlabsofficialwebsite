@@ -85,14 +85,6 @@ DATABASES = {
 }
 
 if not DEBUG and os.environ.get("POSTGRES_URL"):
-    import dj_database_url
-    # DATABASES = {
-    #     "default": dj_database_url.config(
-    #         default=os.environ["POSTGRES_URL"],
-    #         conn_max_age=600,
-    #         ssl_require=True,
-    #     )
-    # }
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
@@ -154,7 +146,7 @@ if not DEBUG:
             "BACKEND": "cloudinary_storage.storage.MediaCloudinaryStorage",
         },
         "staticfiles": {
-            "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+            "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
         },
     }
     MEDIA_URL = f"https://res.cloudinary.com/{os.environ.get('CLOUDINARY_CLOUD_NAME')}/"
