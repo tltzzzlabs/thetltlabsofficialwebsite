@@ -147,7 +147,7 @@ STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [BASE_DIR / "pages" / "static"]
 
-if os.environ.get("VERCEL_ENV") or os.environ.get("PRODUCTION"):
+if not DEBUG:
     # 生产环境
     STORAGES = {
         "default": {
@@ -170,13 +170,6 @@ else:
     }
     MEDIA_URL = "/media/"
     MEDIA_ROOT = BASE_DIR / "media"
-
-# Cloudinary 配置
-CLOUDINARY_STORAGE = {
-    "CLOUD_NAME": os.environ.get("CLOUDINARY_CLOUD_NAME"),
-    "API_KEY": os.environ.get("CLOUDINARY_API_KEY"),
-    "API_SECRET": os.environ.get("CLOUDINARY_API_SECRET"),
-}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
