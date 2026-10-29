@@ -315,7 +315,7 @@
           <div class="video-feature">
             <video muted loop playsinline autoplay controls>
               {% if localdev %}
-              <source src="https://uvziowhnmooa7o1j.public.blob.vercel-storage.com/video/OrdinarynoteDemo.mp4" type="video/mp4">
+              <source src="{{ project.link }}" type="video/mp4">
               {% else %}
               <source src="{{ project.video }}" type="video/mp4" />
               {% endif %}
