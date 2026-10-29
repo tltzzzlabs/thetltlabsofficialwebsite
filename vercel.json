@@ -1,5 +1,5 @@
 {
-  "buildCommand": "python manage.py collectstatic --noinput",
+  "buildCommand": "python manage.py collectstatic --noinput && mkdir -p public && cp staticfiles/pages/sitemap.xml public/sitemap.xml && cp staticfiles/pages/robots.txt public/robots.txt && cp staticfiles/pages/shenma-site-verification.txt public/shenma-site-verification.txt",
   "builds": [
     {
       "src": "config/wsgi.py",
@@ -12,8 +12,16 @@
   ],
   "routes": [
     {
-      "src": "/static/(.*)",
-      "dest": "/static/$1"
+      "src": "/sitemap\\.xml",
+      "dest": "/public/sitemap.xml"
+    },
+    {
+      "src": "/robots\\.txt",
+      "dest": "/public/robots.txt"
+    },
+    {
+      "src": "/shenma-site-verification\\.txt",
+      "dest": "/public/shenma-site-verification.txt"
     },
     {
       "src": "/(.*)",
