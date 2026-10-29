@@ -195,12 +195,15 @@
     display: flex; align-items: center; justify-content: center;
   }
   .video-feature video { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
-  .video-side { display: flex; flex-direction: column; gap: 22px; }
+  .video-side {
+    display: flex; flex-direction: column; gap: 22px;
+  }
   .video-side .side-card {
     flex: 1; border-radius: var(--radius); overflow: hidden; position: relative;
     background: var(--bg-soft); padding: 28px 24px;
     display: flex; flex-direction: column; justify-content: center;
     transition: transform .3s ease;
+    min-height: 0;
   }
   .video-side .side-card:hover { transform: translateY(-4px); }
   .video-side .side-card .ico {
@@ -274,7 +277,16 @@
   /* ===== 响应式 ===== */
   @media (max-width: 960px) {
     .services { grid-template-columns: repeat(2, 1fr); }
-    .video-grid { grid-template-columns: 1fr; }
+    .video-grid { 
+      grid-template-columns: 1fr; 
+      gap: 16px;
+    }
+    .video-feature {
+      aspect-ratio: 16 / 9; /* 移动端用更宽的比例 */
+    }
+    .video-side {
+      gap: 16px;
+    }
     .foot-grid { flex-direction: column; align-items: center; gap: 16px; }
     .menu, .nav-cta .btn-ghost { display: none; }
     .hamburger { display: block; }
@@ -284,6 +296,10 @@
     .hero { padding: 64px 0; }
     .hero iframe { height: 400px; }
     .hero-stats { gap: 24px; }
+    .video-feature {
+      aspect-ratio: auto; /* 小屏移除固定比例，让视频自适应 */
+      min-height: 200px;
+    }
   }
 </style>
 </head>
